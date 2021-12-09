@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">SDA Assign3 2021 Paul Fennell</string>
+    <string-array name="ui_time_entries">
+        <item>" 2"</item>
+        <item>" 3"</item>
+        <item>" 4"</item>
+        <item>" 5"</item>
+        <item>10</item>
+        <item>14</item>
+    </string-array>
+
+    <string name="images_desc">Flavors Images</string>
+    <string name="plc_version">version</string>
+    <string name="plc_flavor">flavor</string>
+    <string name="placeholder">Order T shirt</string>
+
+    <string name="customer_name">Name</string>
+    <string name="order_message_1">Please find my order attached</string>
+    <string name="order_message_collect">I will collect it in&#160;</string>
+    <string name="order_message_end">Regards</string>
+    <string name="notification_title">Notification!</string>
+    <string name="to_email">my-tshirt@sda.ie</string>
+    <string name="email_subject">Order Request </string>
+    <string name="border">border</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="welcome_message_tab">Welcome To My T-Shirt Shop</string>
+    <string name="t_shirt_welcome">t-shirt_welcome</string>
+
+</resources>
