@@ -24,13 +24,13 @@ package com.example.sdaassign32021;
 public class FlavorAdapter {
 
     // Name of the Android version (e.g. Gingerbread, Honeycomb, Ice Cream Sandwich)
-    private String mName;
+    private final String mName;
 
     // Android version number (e.g. 2.3-2.7, 3.0-3.2.6, 4.0-4.0.4)
-    private String mPrice;
+    private final String mPrice;
 
     // Drawable resource ID
-    private int mImageResourceId;
+    private final int mImageResourceId;
 
     /*
      * Create a new FlavorAdapter object.

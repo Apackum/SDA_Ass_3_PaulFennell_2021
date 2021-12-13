@@ -12,7 +12,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#26CDCD"
+        android:background="#B30A0A"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
@@ -20,7 +20,7 @@
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FF8707"
+        android:background="#000000"
         android:elevation="4dp"
         android:minHeight="?attr/actionBarSize"
         app:tabGravity="fill"

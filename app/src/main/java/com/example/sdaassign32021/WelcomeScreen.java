@@ -8,7 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
+/*
+@author Paul fennell
 * I have creates a java file for my welcome screen and accompanying xml file
  */
 public class WelcomeScreen extends Fragment {

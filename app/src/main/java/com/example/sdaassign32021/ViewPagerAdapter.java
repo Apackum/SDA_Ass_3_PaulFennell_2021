@@ -8,8 +8,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 /*
- * viewPager adapter.
- * @author Chris Coughlan 2019
+ * This is a viewPager adapter.
+ * @author Paul fennell
  */
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 

@@ -13,34 +13,37 @@
         android:layout_height="wrap_content"
         tools:context=".OrderTshirt">
 
-    <Button
-        android:id="@+id/sendButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
-        android:text="SEND ORDER"
-        android:textColor="#1B917F"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editCollect" />
+        <Button
+            android:id="@+id/sendButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="32dp"
+            android:text="@string/send_order"
+            android:background="@color/colorAccent"
+            android:textColor="#1B917F"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editCollect"
+            app:layout_constraintVertical_bias="0.0" />
 
-    <EditText
+        <EditText
         android:id="@+id/editDeliver"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
-        android:hint="Enter Your Delivery Address"
+        android:hint="@string/enter_your_delivery_address"
         android:inputType="textMultiLine"
         android:textColor="@color/colorAccent"
         android:textColorHint="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
-        android:visibility="invisible"/>
+        android:visibility="invisible"
+            android:autofillHints="Please enter your address" />
 
     <EditText
         android:id="@+id/editCustomer"
@@ -49,14 +52,15 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
-        android:hint="Enter Your Name"
+        android:hint="@string/enter_your_name"
         android:imeOptions="actionDone"
         android:inputType="text"
         android:textColor="@color/colorAccent"
         android:textColorHint="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:autofillHints="PLease enter your name" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -69,7 +73,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/editCustomer"
         app:layout_constraintTop_toBottomOf="@+id/editCustomer"
-        app:srcCompat="@drawable/camera" />
+        app:srcCompat="@drawable/camera"
+        android:contentDescription="@string/images_desc" />
 
     <Spinner
         android:id="@+id/spinner"
@@ -92,7 +97,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
-        android:text="Take photo for T-Shirt"
+        android:text="@string/take_photo_for_t_shirt"
         android:textColor="#ffffff"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -108,7 +113,7 @@
             android:layout_marginTop="24dp"
             android:layout_marginEnd="8dp"
             android:gravity="end"
-            android:text="Please choose your collection in days"
+            android:text="@string/please_choose_your_collection_in_days"
             android:textColor="@color/colorAccent"
             android:textSize="18sp"
             android:visibility="invisible"
@@ -123,7 +128,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Delivery"
+            android:text="@string/delivery"
+            android:textColor="#1B917F"
+            android:background="@color/colorAccent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
@@ -133,8 +140,10 @@
             android:id="@+id/button_set_collection"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
             android:layout_marginTop="24dp"
-            android:text="Collection"
+            android:text="@string/collection"
+            android:textColor="#1B917F"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.078"
             app:layout_constraintStart_toStartOf="parent"

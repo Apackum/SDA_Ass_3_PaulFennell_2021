@@ -30,7 +30,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 /*
- * @author Chris Coughlan 2019
+ * @author Paul Fennell 2021
  */
 public class FlavorViewAdapter extends RecyclerView.Adapter<FlavorViewAdapter.ViewHolder> {
     private static final String TAG = "RecyclerViewAdapter";

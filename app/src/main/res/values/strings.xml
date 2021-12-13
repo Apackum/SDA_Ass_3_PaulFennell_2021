@@ -1,12 +1,16 @@
 <resources>
     <string name="app_name">SDA Assign3 2021 Paul Fennell</string>
     <string-array name="ui_time_entries">
+        <item>" 1"</item>
         <item>" 2"</item>
         <item>" 3"</item>
         <item>" 4"</item>
-        <item>" 5"</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
         <item>10</item>
-        <item>14</item>
     </string-array>
 
     <string name="images_desc">Flavors Images</string>
@@ -26,5 +30,12 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="welcome_message_tab">Welcome To My T-Shirt Shop</string>
     <string name="t_shirt_welcome">t-shirt_welcome</string>
+    <string name="send_order">SEND ORDER</string>
+    <string name="enter_your_delivery_address">Enter Your Delivery Address</string>
+    <string name="enter_your_name">Enter Your Name</string>
+    <string name="take_photo_for_t_shirt">Take photo for T-Shirt</string>
+    <string name="please_choose_your_collection_in_days">Please choose your collection in days</string>
+    <string name="delivery">Delivery</string>
+    <string name="collection">Collection</string>
 
 </resources>
