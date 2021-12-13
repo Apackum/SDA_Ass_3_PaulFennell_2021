@@ -1,17 +1,10 @@
 package com.example.sdaassign32021;
 
-import static android.app.Activity.RESULT_OK;
-
-import java.io.FileOutputStream;
 import java.util.Date;
 
 import android.Manifest;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.Build;
@@ -48,6 +41,8 @@ import java.io.IOException;
  */
 public class OrderTshirt extends Fragment {
 
+
+
     public OrderTshirt() {
         // Required empty public constructor
     }
@@ -60,7 +55,7 @@ public class OrderTshirt extends Fragment {
     private ImageView mCameraImage;
     private TextView mCol;
     private EditText mDelivery1;
-
+    private Uri imageDisplay;
     //static keys
     private static final int REQUEST_TAKE_PHOTO = 2;
     private static final String TAG = "OrderTshirt";
@@ -97,25 +92,31 @@ public class OrderTshirt extends Fragment {
             @Override
             public void onClick(View v) {
                 sendEmail(v);
+                Log.d("onClick_email", "onClick: for sendemail ");
             }
         });
 
         mCollection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("onClickCollection", "onClick: for choosing collection ");
                 mCollection.setVisibility(View.VISIBLE);
                 mSpinner.setVisibility(View.VISIBLE);
                 mCol.setVisibility(View.VISIBLE);
                 mDelivery1.setVisibility(View.INVISIBLE);
+                mCameraImage.setImageURI(imageDisplay);
             }
         });
 
         mDelivery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("onClickDelivery", "onClick: for choosing delivery");
                 mSpinner.setVisibility(View.INVISIBLE);
                 mCol.setVisibility(View.INVISIBLE);
                 mDelivery1.setVisibility(View.VISIBLE);
+                mCameraImage.setImageURI(imageDisplay);
+
             }
         });
 
@@ -128,47 +129,54 @@ public class OrderTshirt extends Fragment {
         return root;
     }
 
+    //This is my take picture intent which checks for permission
+    //calls the createImageFile method and stores the camera image within uri using fileprovider
+    //and starts the activity
+    private void dispatchTakePictureIntent() {
+
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+            File picFile = null;
+            try {
+                picFile = createPicFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Toast.makeText(getContext(), "Somthing went wrong when creating photoFile", Toast.LENGTH_SHORT).show();
+            }
+            if (photoFile != null) {
+                //Stores image within a URI
+                Uri photoURI = FileProvider.getUriForFile(getContext(), "com.example.android.fileprovider", picFile);
+                imageDisplay =photoURI;
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+                Log.d("dispatchCameraIntent", "This is my camera intent");
+            }
+        }
+    }
 
     //    This is my create image and directory methods
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private File createImageFile() throws IOException {
-        // I am creating the images file name and declaing its location
-        String timeFor = new SimpleDateFormat("yyyy MM dd HH mm ss").format(new Date());
+    private File createPicFile() throws IOException {
+        // I am creating the images file name and declaring its location using a timestamp and imageName
+        String timeFor = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageName = "Camera_Image " + timeFor + "_";
         File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(imageName,".jpg", storageDir);
         // Save a file: path for use with ACTION_VIEW intents
         currentPhotoPath = image.getAbsolutePath();
-
+        Log.d("CreatePicMethod", "This is creating a file");
         return image;
     }
 
-    private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-            File photoFile = null;
-            try {
-                photoFile = createImageFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(getContext(), "com.example.android.fileprovider", photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
-            }
-        }
-    }
 
-
-
-    //This Creates My order summary in my Send email method
+    //This Creates My order summary in my sendEmail method
+    //I have added an if/else statement to decide what is shown within the email when called
     private String createOrderSummary(View v) {
         String orderMessage = "";
-
         String deliveryInstruction = meditDelivery.getText().toString();
         String customerName = getString(R.string.customer_name) + " " + mCustomerName.getText().toString();
         orderMessage += customerName + "\n" + "\n" + getString(R.string.order_message_1);
+        // if the spinner is visible do this if not show the delivery
         if(mSpinner.isShown()){
             orderMessage += "\n" + getString(R.string.order_message_collect) + mSpinner.getSelectedItem().toString() + " days.\n";
         }else{
@@ -176,28 +184,24 @@ public class OrderTshirt extends Fragment {
             orderMessage += "\n" + deliveryInstruction;
         }
         orderMessage += "\n" + getString(R.string.order_message_end) + "\n" + mCustomerName.getText().toString();
-
+        Log.d("orderSum", "Creating an order summary");
         return orderMessage;
     }
 
+    //This is the sendEmail method which allows the user to choose which email app they use
+    //it also request a mandatory name and adds in the required info and attaches the camera image as attachment
     private void sendEmail(View v) {
         Intent email = new Intent(Intent.ACTION_SEND);
         String customerName = mCustomerName.getText().toString();
-        if (mCustomerName == null || customerName.equals(""))
-        {
+        if (mCustomerName == null || customerName.equals("")) {
             Toast.makeText(getContext(), "Please enter your name", Toast.LENGTH_SHORT).show();
-            /* we can also use a dialog
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Notification!").setMessage("Customer Name not set.").setPositiveButton("OK", null).show();*/
-
         } else {
             email.setType("image/jpg");
             String orderMessage = createOrderSummary(v);
             email.putExtra(Intent.EXTRA_EMAIL, new String[]{"sdaass3@mail.ie"});
             email.putExtra(Intent.EXTRA_SUBJECT, new String("Order Summary"));
             email.putExtra(Intent.EXTRA_TEXT, orderMessage);
-            Uri uri = Uri.fromFile(phot);
-            email.putExtra(Intent.EXTRA_STREAM, currentPhotoPath);
+            email.putExtra(Intent.EXTRA_STREAM, imageDisplay);
             email.setType("image/jpg");
             //need this to prompts email client only
             email.setType("message/rfc822");
@@ -207,6 +211,7 @@ public class OrderTshirt extends Fragment {
         }
     }
 
+    //This is my verifyPermissions method which requests the users permission if needed to read,write and access camera permissions
     private void verifyPermissions(){
         Log.d("perm", "Verify: Ask the user for permissions");
         String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
@@ -216,13 +221,14 @@ public class OrderTshirt extends Fragment {
                 ContextCompat.checkSelfPermission(this.getContext(),permissions[2]) == PackageManager.PERMISSION_GRANTED){
             dispatchTakePictureIntent();
 
+
         }else {
             ActivityCompat.requestPermissions(getActivity(),permissions,REQUEST_TAKE_PHOTO);
         }
     }
 
 
-
+    //Overide onRequestPermissionResult method which uses the verifyPermission method
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         verifyPermissions();
